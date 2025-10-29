@@ -1,0 +1,53 @@
+<#
+.SYNOPSIS
+    Configures the policy "Prevent enabling lock screen camera" to Enabled.
+    Safe to run multiple times (idempotent).
+
+.DESCRIPTION
+    This script sets the following registry value:
+        HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization
+        Value: NoLockScreenCamera (REG_DWORD) = 1
+
+    This enforces:
+        Computer Configuration >> Administrative Templates >> Control Panel >> Personalization >>
+        "Prevent enabling lock screen camera" = Enabled
+#>
+
+# Ensure running as Administrator
+If (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
+    [Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Write-Host "Please run this script as Administrator." -ForegroundColor Red
+    Exit 1
+}
+
+# Define policy registry details
+$RegPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization"
+$ValueName = "NoLockScreenCamera"
+$DesiredValue = 1
+
+# Check if registry path exists
+if (!(Test-Path $RegPath)) {
+    Write-Host "Creating registry path: $RegPath"
+    New-Item -Path $RegPath -Force | Out-Null
+}
+
+# Get current value (if it exists)
+try {
+    $CurrentValue = (Get-ItemProperty -Path $RegPath -Name $ValueName -ErrorAction Stop).$ValueName
+} catch {
+    $CurrentValue = $null
+}
+
+# Compare and apply change if needed
+if ($CurrentValue -ne $DesiredValue) {
+    Write-Host "Setting '$ValueName' to $DesiredValue at $RegPath ..."
+    Set-ItemProperty -Path $RegPath -Name $ValueName -Value $DesiredValue -Type DWord
+    Write-Host "Policy updated successfully: 'Prevent enabling lock screen camera' is now Enabled." -ForegroundColor Green
+} else {
+    Write-Host "No change needed: policy is already set to Enabled." -ForegroundColor Cyan
+}
+
+# Optional: Refresh Group Policy
+Write-Host "Refreshing Group Policy..."
+gpupdate /target:computer /force | Out-Null
+Write-Host "Group Policy refreshed successfully." -ForegroundColor Green
