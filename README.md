@@ -3,7 +3,7 @@
 
 
 # Defense Information Systems Agency - Security Technical Implementation Guides (DISA - STIGs)
-- [STIG Remediation Template](https://github.com/behan101/DISA-STIGs/blob/main/stig_remediation_template)
+- [STIG Remediation Template](https://github.com/behan101/DISA-STIGs/blob/main/stig_remediation_template.ps1)
 
 ## Platforms and Languages Leveraged
 - Windows 11 Virtual Machines (Microsoft Azure)
@@ -85,7 +85,7 @@ After validating, I restart the machine before scanning with Tenable for another
 
 ## Summary
 
-The vulnerability with the associated STIG-ID has been identified using Tenable. The scan was configured internally on the Local-Scan-Engine-01 with the target specified as the private IP address of the virtual machine. Administrative credentials were given so that the scan would be thorough. The compliance audit used in the scan was configured to the appropriate operating system and version (DISA Microsoft Windows 11 STIG v2r4). All plugins were disabled with the exception of the Windows Compliance Checks (Plugin ID: 24760) in order to expedite the scanning process and reduce resource consumption. The identified STIG-ID compliance failure was then remediated using PowerShell scripting. After the script executed, the remediation validation process began with looking up the policy configuration in the Registry Editor of the machine. The machine was then restarted before another scan was conducted using the same parameters in Tenable. The results were confirmed to have passed the compiance check associated with the STIG-ID.
+The vulnerability with the associated STIG-ID has been identified using Tenable. The scan was configured internally on the Local-Scan-Engine-01 with the target specified as the private IP address of the virtual machine. Administrative credentials were given so that the scan would be thorough. The compliance audit used in the scan was configured to the appropriate operating system and version (DISA Microsoft Windows 11 STIG v2r4). All plugins were disabled with the exception of the Windows Compliance Checks (Plugin ID: 24760) in order to expedite the scanning process and reduce resource consumption. The identified STIG-ID compliance failure was then remediated using PowerShell scripting and the `STIG Remediation Template` . After the script executed, the remediation validation process began with looking up the policy configuration in the Registry Editor of the machine. The machine was then restarted before another scan was conducted using the same parameters in Tenable. The results were confirmed to have passed the compiance check associated with the STIG-ID.
 
 ---
 
