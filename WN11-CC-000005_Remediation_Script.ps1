@@ -1,7 +1,18 @@
 <#
 .SYNOPSIS
-    Configures the policy "Prevent enabling lock screen camera" to Enabled.
+    This PowerShell Script ensures that the associated STIG-ID WN11-CC-000005 vulernability is remediated Configures the policy "Prevent enabling lock screen camera" to Enabled.
     Safe to run multiple times (idempotent).
+
+.NOTES
+    Author          : Brad Han
+    LinkedIn        : https://www.linkedin.com/in/brad-han/
+    GitHub          : https://github.com/behan101
+    Date Created    : 10/29/2025
+    Last Modified   : 10/29/2025
+    Version         : 1.0
+    CVEs            : N/A
+    Plugin IDs      : N/A
+    STIG-ID         : WN11-CC-000005
 
 .DESCRIPTION
     This script sets the following registry value:
@@ -11,6 +22,17 @@
     This enforces:
         Computer Configuration >> Administrative Templates >> Control Panel >> Personalization >>
         "Prevent enabling lock screen camera" = Enabled
+
+.TESTED ON
+    Date(s) Tested  : 10/29/2025
+    Tested By       : 10/29/2025
+    Systems Tested  : 
+    PowerShell Ver. : 
+
+.USAGE
+    Put any usage instructions here.
+    Example syntax:
+    PS C:\> .\WN11-CC-000005_Remediation_Script.ps1
 #>
 
 # Ensure running as Administrator
