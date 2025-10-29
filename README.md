@@ -79,11 +79,13 @@ After validating, I restart the machine before scanning with Tenable for another
 
 **Scan Results:**
 
+<img width="1917" height="731" alt="image" src="https://github.com/user-attachments/assets/16fd9076-5634-40ec-8bbe-9be76f9f8685" />
 
 ---
 
 ## Summary
 
+The vulnerability with the associated STIG-ID has been identified using Tenable. The scan was configured internally on the Local-Scan-Engine-01 with the target specified as the private IP address of the virtual machine. Administrative credentials were given so that the scan would be thorough. The compliance audit used in the scan was configured to the appropriate operating system and version (DISA Microsoft Windows 11 STIG v2r4). 
 
 ---
 
