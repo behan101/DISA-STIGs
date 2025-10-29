@@ -42,7 +42,7 @@ Searched for `STIG-ID` within the Tenable Audits database (https://www.tenable.c
 
 After searching for the specified STIG-ID within the Tenable Audit database, the solution to remediate the vulnerbility was given in steps. 
 
-**Example solution:
+**Example solution:**
 
 <img width="1448" height="727" alt="image" src="https://github.com/user-attachments/assets/abc452f2-ecb3-45f0-991b-b5fe84d9a60e" />
 
@@ -58,7 +58,19 @@ After searching for the specified STIG-ID within the Tenable Audit database, the
 
 ### 5. Using PowerShell ISE, I began the process of testing and executing the script.
 
+**Running the script:**
+
 <img width="2549" height="1221" alt="image" src="https://github.com/user-attachments/assets/5f53b646-3c32-4d74-9095-92676c08bdeb" />
+
+---
+
+### 6. Remediation Validation post PowerShell Script execution.
+
+**Remediation Validation:**
+
+After executing the script, I validate the changes by finding the policy on the Windows machine and checking the values. I then scanned the machine using Tenable again and checked the results with the STIG-ID remediated in the script. When the scan results did not have the STIG-ID as a failure for compliance, I confirmed that the vulnerability has been remediated.
+
+<img width="2359" height="114" alt="image" src="https://github.com/user-attachments/assets/c9e90e7d-4715-4b31-90e4-4b03b9417dd6" />
 
 
 ## Summary
