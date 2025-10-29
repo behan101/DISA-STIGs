@@ -3,7 +3,7 @@
 
 
 # Defense Information Systems Agency - Security Technical Implementation Guides (DISA - STIGs)
-- [Scenario Creation](linkplaceholder)
+- [STIG Remediation Template](linkplaceholder)
 
 ## Platforms and Languages Leveraged
 - Windows 11 Virtual Machines (Microsoft Azure)
