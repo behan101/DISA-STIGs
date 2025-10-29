@@ -17,9 +17,9 @@ An internal audit has revealed that various Windows 11 machines have numerous fa
 
 ###  Discovery
 
-- **Scan the virtual machine associated with the Windows Compliance Check failures using tenable.
-- **Select Audits and discover the STIG-ID associated with the failure.
-- **Research remdiation for the STIG-ID.
+- Scan the virtual machine associated with the Windows Compliance Check failures using tenable.
+- Select Audits and discover the STIG-ID associated with the failure.
+- Research remdiation for the STIG-ID.
 
 ---
 
@@ -30,38 +30,21 @@ An internal audit has revealed that various Windows 11 machines have numerous fa
 
 ---
 
-### 2. Searched the `DeviceProcessEvents` Table
+### 2. Searched the STIG-ID using Tenable Audits.
 
-Searched for any `ProcessCommandLine` that contained the string "tor-browser-windows-x86_64-portable-14.0.1.exe". Based on the logs returned, at `2025-10-23T08:24:26.7848041Z`, an employee on the "threat-hunt-bra" device ran the file `tor-browser-windows-x86_64-portable-14.5.8.exe` from their Downloads folder, using a command that triggered a silent installation.
+Searched for `STIG-ID` within the Tenable Audits database (https://www.tenable.com/audits).
 
-**Query used to locate event:**
-
-```kql
-DeviceProcessEvents
-| where DeviceName == "threat-hunt-bra"
-| where ProcessCommandLine contains "tor-browser-windows-x86_64-portable-14.5.8.exe"
-| project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, SHA256, ProcessCommandLine
-
-```
-<img width="1472" height="191" alt="image" src="https://github.com/user-attachments/assets/1b386e74-129d-4e99-ad0a-3e618b44d17b" />
+<img width="1475" height="895" alt="image" src="https://github.com/user-attachments/assets/2f715814-4e4e-47a7-8ac1-db56a5187176" />
 
 ---
 
-### 3. Searched the `DeviceProcessEvents` Table for TOR Browser Execution
+### 3. Researched the solution to remdiate.
 
-Searched for any indication that user "employee" actually opened the TOR browser. There was evidence that they did open it at `2025-10-23T08:24:53.7808645Z`. There were several other instances of `firefox.exe` (TOR) as well as `tor.exe` spawned afterwards.
+After searching for the specified STIG-ID within the Tenable Audit database, the solution to remdiate the vulnerbility was given in steps. 
 
-**Query used to locate events:**
+**Example solution:
 
-```kql
-DeviceProcessEvents
-| where DeviceName == "threat-hunt-bra"
-| where FileName has_any ("tor.exe", "firefox.exe", "tor-browser.exe")
-| project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, SHA256, ProcessCommandLine
-| order by Timestamp desc
-
-```
-<img width="1465" height="442" alt="image" src="https://github.com/user-attachments/assets/64ca1330-26ba-4fd8-9ecd-a0caa5198fab" />
+<img width="1448" height="727" alt="image" src="https://github.com/user-attachments/assets/abc452f2-ecb3-45f0-991b-b5fe84d9a60e" />
 
 ---
 
