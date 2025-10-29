@@ -50,7 +50,7 @@ After searching for the specified STIG-ID within the Tenable Audit database, the
 
 ### 4. Used the Stig Remediation Template to write a PowerShell script solution.
 
-**Stig Remdiation Template used: https://github.com/behan101/DISA-STIGs/blob/main/stig_remediation_template**
+**Stig Remediation Template used: https://github.com/behan101/DISA-STIGs/blob/main/stig_remediation_template**
 
 <img width="2126" height="948" alt="image" src="https://github.com/user-attachments/assets/e132d851-1b7b-4b0e-8ba8-5310417c7ace" />
 
