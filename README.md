@@ -38,7 +38,7 @@ Searched for `STIG-ID` within the Tenable Audits database (https://www.tenable.c
 
 ---
 
-### 3. Researched the solution to remdiate.
+### 3. Researched the solution.
 
 After searching for the specified STIG-ID within the Tenable Audit database, the solution to remdiate the vulnerbility was given in steps. 
 
@@ -48,23 +48,13 @@ After searching for the specified STIG-ID within the Tenable Audit database, the
 
 ---
 
-### 4. Searched the `DeviceNetworkEvents` Table for TOR Network Connections
+### 4. Used the Stig Remediation Template to write a PowerShell script solution.
 
-Searched for any indication the TOR browser was used to establish a connection using any of the known TOR ports. At `2025-10-23T08:26:31.7541945Z`, an employee on the "threat-hunt-bra" device successfully established a connection to the remote IP address `66.222.102.232` on port `9001`. The connection was initiated by the process `tor.exe`, located in the folder `c:\users\employee\desktop\tor browser\browser\torbrowser\tor\tor.exe`. There were a couple of other connections to sites over port `443`.
 
-**Query used to locate events:**
 
-```kql
-DeviceNetworkEvents
-| where DeviceName == "threat-hunt-bra"
-| where InitiatingProcessAccountName != "system"
-| where InitiatingProcessFileName in ("tor.exe", "firefox.exe")
-| where RemotePort in ("9001", "9030", "9040", "9050", "9051", "9150", "80", "443")
-| project Timestamp, DeviceName, InitiatingProcessAccountName, ActionType, RemoteIP, RemotePort, RemoteUrl, InitiatingProcessFileName, InitiatingProcessFolderPath
-| order by Timestamp desc
+**Stig Remdiation Template used: https://github.com/behan101/DISA-STIGs/blob/main/stig_remediation_template**
 
-```
-<img width="1489" height="386" alt="image" src="https://github.com/user-attachments/assets/98ba0372-f4b0-4db0-bb42-214f7fea6ce7" />
+<img width="2126" height="948" alt="image" src="https://github.com/user-attachments/assets/e132d851-1b7b-4b0e-8ba8-5310417c7ace" />
 
 ---
 
