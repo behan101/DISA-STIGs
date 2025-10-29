@@ -8,7 +8,6 @@
 ## Platforms and Languages Leveraged
 - Windows 11 Virtual Machines (Microsoft Azure)
 - Tenable
-- EDR Platform: Microsoft Defender for Endpoint
 - Windows PowerShell
 
 ##  Scenario
@@ -72,6 +71,16 @@ After executing the script, I validate the changes by finding the policy on the 
 
 <img width="2359" height="114" alt="image" src="https://github.com/user-attachments/assets/c9e90e7d-4715-4b31-90e4-4b03b9417dd6" />
 
+Checking the HKEY_LOCAL_MACHINE path for creation and correct value of the DWORD.
+
+<img width="2555" height="1218" alt="image" src="https://github.com/user-attachments/assets/8173019c-2edf-4329-a1e1-3176d4ecbde3" />
+
+After validating, I restart the machine before scanning with Tenable for another audit to ensure the changes are saved and implemented.
+
+**Scan Results:**
+
+
+---
 
 ## Summary
 
