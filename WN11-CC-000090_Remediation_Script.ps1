@@ -27,6 +27,12 @@
     Log file:
         C:\Logs\PolicyHardening.log
 
+    STIG check:
+        HKLM:\SOFTWARE\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}
+        Name : NoGPOListChanges
+        Type : REG_DWORD
+        Value: 0
+
 .TESTED ON
     Date(s) Tested  : 10/30/2025
     Tested By       : Brad Han
@@ -36,71 +42,114 @@
     Put any usage instructions here.
     Example syntax:
     PS C:\> .\WN11-CC-000090_Remediation_Script.ps1
+
 #>
 
-# -------------------------------
+# ---------------------------
 # Configuration
-# -------------------------------
+# ---------------------------
 $LogDirectory = "C:\Logs"
-$LogFile = "$LogDirectory\PolicyHardening.log"
+$LogFile = Join-Path $LogDirectory "PolicyHardening.log"
 
-# Ensure log directory exists
-if (!(Test-Path $LogDirectory)) {
-    New-Item -ItemType Directory -Path $LogDirectory -Force | Out-Null
-}
+# STIG-mandated registry path and value
+$StigGuidPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}"
+$ValueName = "NoGPOListChanges"
+$DesiredValue = 0
 
-# Logging function
+# ---------------------------
+# Helpers
+# ---------------------------
+if (!(Test-Path $LogDirectory)) { New-Item -ItemType Directory -Path $LogDirectory -Force | Out-Null }
+
 function Write-Log {
-    param (
+    param(
         [string]$Message,
-        [string]$Color = "White"
+        [ConsoleColor]$Color = "White"
     )
-    $Timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
-    $LogEntry = "$Timestamp - $Message"
-    Write-Host $LogEntry -ForegroundColor $Color
-    Add-Content -Path $LogFile -Value $LogEntry
+    $ts = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+    $entry = "$ts - $Message"
+    Write-Host $entry -ForegroundColor $Color
+    Add-Content -Path $LogFile -Value $entry
 }
 
-Write-Log "Starting policy configuration: Configure registry policy processing (Enabled + Process even if unchanged)..."
-
-# Check for admin privileges
-if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(
-    [Security.Principal.WindowsBuiltInRole] "Administrator")) {
-    Write-Log "ERROR: Script must be run as Administrator." "Red"
+# ---------------------------
+# Admin check
+# ---------------------------
+if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Log "ERROR: Script must be run as Administrator." Red
     Exit 1
 }
 
-# Define registry policy details
-$RegPath = "HKLM:\Software\Policies\Microsoft\Windows\System"
-$ValueName = "NoGPOListChanges"
-$DesiredValue = 0  # Enabled + Process even if GPOs unchanged
+Write-Log "Starting STIG enforcement: WN11-CC-000090 - Configure registry policy processing..."
 
+# ---------------------------
 # Ensure registry path exists
-if (!(Test-Path $RegPath)) {
-    Write-Log "Creating registry path: $RegPath"
-    New-Item -Path $RegPath -Force | Out-Null
-}
-
-# Retrieve current value (if exists)
-try {
-    $CurrentValue = (Get-ItemProperty -Path $RegPath -Name $ValueName -ErrorAction Stop).$ValueName
-} catch {
-    $CurrentValue = $null
-}
-
-# Compare and apply if needed
-if ($CurrentValue -ne $DesiredValue) {
-    Write-Log "Updating $RegPath\$ValueName from '$CurrentValue' to '$DesiredValue'..."
-    Set-ItemProperty -Path $RegPath -Name $ValueName -Value $DesiredValue -Type DWord
-    Write-Log "SUCCESS: 'Configure registry policy processing' enabled with 'Process even if GPOs have not changed'." "Green"
+# ---------------------------
+if (-not (Test-Path $StigGuidPath)) {
+    Write-Log "Creating registry path: $StigGuidPath"
+    try {
+        New-Item -Path $StigGuidPath -Force | Out-Null
+        Write-Log "Created registry key successfully." Green
+    } catch {
+        Write-Log "ERROR creating registry key: $_" Red
+        Exit 1
+    }
 } else {
-    Write-Log "No change needed: policy already set correctly." "Cyan"
+    Write-Log "Registry path already exists: $StigGuidPath" Cyan
 }
 
-# Refresh Group Policy
-Write-Log "Refreshing Group Policy..."
-gpupdate /target:computer /force | Out-Null
-Write-Log "Group Policy refreshed successfully." "Green"
+# ---------------------------
+# Read current value
+# ---------------------------
+try {
+    $current = (Get-ItemProperty -Path $StigGuidPath -Name $ValueName -ErrorAction Stop).$ValueName
+    Write-Log "Current value for $ValueName is: $current" Cyan
+} catch {
+    $current = $null
+    Write-Log "Current value for $ValueName not present." Cyan
+}
 
-Write-Log "Policy configuration completed successfully."
-Write-Log "------------------------------------------------------------"
+# ---------------------------
+# Set the desired value if needed
+# ---------------------------
+if ($current -ne $DesiredValue) {
+    Write-Log "Setting $ValueName to $DesiredValue at $StigGuidPath ..."
+    try {
+        New-ItemProperty -Path $StigGuidPath -Name $ValueName -Value $DesiredValue -PropertyType DWord -Force | Out-Null
+        Write-Log "SUCCESS: $ValueName set to $DesiredValue." Green
+    } catch {
+        Write-Log "ERROR: Failed to set registry value: $_" Red
+        Exit 1
+    }
+} else {
+    Write-Log "No change required: $ValueName already set to $DesiredValue." Cyan
+}
+
+# ---------------------------
+# Verification read-back
+# ---------------------------
+try {
+    $verify = (Get-ItemProperty -Path $StigGuidPath -Name $ValueName -ErrorAction Stop).$ValueName
+    if ($verify -eq $DesiredValue) {
+        Write-Log "Verification passed: $ValueName = $verify" Green
+    } else {
+        Write-Log "Verification FAILED: $ValueName = $verify (expected $DesiredValue)" Red
+        Exit 1
+    }
+} catch {
+    Write-Log "Verification FAILED: could not read $ValueName. $_" Red
+    Exit 1
+}
+
+# ---------------------------
+# Refresh Group Policy to force immediate application
+# ---------------------------
+Write-Log "Refreshing Group Policy (gpupdate /force) ..."
+try {
+    gpupdate /force | Out-Null
+    Write-Log "gpupdate completed." Green
+} catch {
+    Write-Log "WARNING: gpupdate failed or returned non-zero. $_" Yellow
+}
+
+Write-Log "Completed STIG enforcement: WN11-CC-000090" Green
