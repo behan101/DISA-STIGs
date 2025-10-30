@@ -27,7 +27,7 @@
     Date(s) Tested  : 10/30/2025
     Tested By       : Brad Han
     Systems Tested  : Microsoft Windows 11
-    PowerShell Ver. : 
+    PowerShell Ver. : 5.1.26100.6899
 
 .USAGE
     Put any usage instructions here.
