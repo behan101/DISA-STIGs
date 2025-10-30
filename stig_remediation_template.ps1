@@ -13,11 +13,18 @@
     Plugin IDs      : N/A
     STIG-ID         : 
 
+.DESCRIPTION
+    This script sets the following registry value:
+
+
+    This enforces:
+
+
 .TESTED ON
-    Date(s) Tested  : 
-    Tested By       : 
+    Date(s) Tested  : 10/29/2025
+    Tested By       : Brad Han
     Systems Tested  : 
-    PowerShell Ver. : 
+    PowerShell Ver. : WN11-CC-000315_Remediation_Script.ps1
 
 .USAGE
     Put any usage instructions here.
