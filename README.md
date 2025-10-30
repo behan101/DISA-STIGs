@@ -3,7 +3,12 @@
 
 
 # Defense Information Systems Agency - Security Technical Implementation Guides (DISA - STIGs)
-- [STIG Remediation Template](https://github.com/behan101/DISA-STIGs/blob/main/stig_remediation_template.ps1)
+
+[STIG Remediation Template](https://github.com/behan101/DISA-STIGs/blob/main/stig_remediation_template.ps1)
+
+**STIG Remediation Scripts:**
+
+https://github.com/behan101/DISA-STIGs/blob/main/WN11-CC-000005_Remediation_Script.ps1
 
 ## Platforms and Languages Leveraged
 - Windows 11 Virtual Machines (Microsoft Azure)
