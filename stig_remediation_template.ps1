@@ -24,8 +24,7 @@
     Date(s) Tested  : 10/29/2025
     Tested By       : Brad Han
     Systems Tested  : 
-    PowerShell Ver. : WN11-CC-000315_Remediation_Script.ps1
-
+    PowerShell Ver. : 5.1.26100.6899
 .USAGE
     Put any usage instructions here.
     Example syntax:
