@@ -6,13 +6,19 @@
 
 [STIG Remediation Template](https://github.com/behan101/DISA-STIGs/blob/main/stig_remediation_template.ps1)
 
-**STIG Remediation Scripts:**
+**Windows 11 STIG Remediation Scripts:**
 
 [WN11-AU-000050](https://github.com/behan101/DISA-STIGs/blob/main/WN11-AU-000050_Remediation_Script.ps1)
+
 [WN11-CC-000005](https://github.com/behan101/DISA-STIGs/blob/main/WN11-CC-000005_Remediation_Script.ps1)
+
 [WN11-CC-000090](https://github.com/behan101/DISA-STIGs/blob/main/WN11-CC-000090_Remediation_Script.ps1)
+
 [WN11-CC-000315](https://github.com/behan101/DISA-STIGs/blob/main/WN11-CC-000315_Remediation_Script.ps1)
+
 [WN11-EP-000310](https://github.com/behan101/DISA-STIGs/blob/main/WN11-EP-000310_Remediation_Script.ps1)
+
+**Linux STIG Remediation Scripts:**
 
 
 ## Platforms and Languages Leveraged
