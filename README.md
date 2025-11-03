@@ -18,8 +18,15 @@
 
 [WN11-EP-000310](https://github.com/behan101/DISA-STIGs/blob/main/WN11-EP-000310_Remediation_Script.ps1)
 
-**Linux STIG Remediation Scripts:**
+[WN11-CC-000197](https://github.com/behan101/DISA-STIGs/blob/main/WN11-CC-000197_Remediation_Script.ps1)
 
+[WN11-SO-000220](https://github.com/behan101/DISA-STIGs/blob/main/WN11-SO-000220_Remediation_Script.ps1)
+
+[WN11-SO-000230](https://github.com/behan101/DISA-STIGs/blob/main/WN11-SO-000230_Remediation_Script.ps1)
+
+[WN11-UR-000070](https://github.com/behan101/DISA-STIGs/blob/main/WN11-UR-000070_Remediation_Script.ps1)
+
+[WN11-CC-000285](https://github.com/behan101/DISA-STIGs/blob/main/WN11-CC-000285_Remediation_Script.ps1)
 
 ## Platforms and Languages Leveraged
 - Windows 11 Virtual Machines (Microsoft Azure)
